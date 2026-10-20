@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>漢字のれんしゅう</title><link rel="icon" href="data:,"><link rel="stylesheet" href="style.css"><script src="kanji-data.js" defer></script><script src="kanji-library-data.js" defer></script><script src="app-settings.js" defer></script><script src="kanji-library.js" defer></script><script src="sketch.js" defer></script>
+</head>
+<body><main>
+<header><p id="main-eyebrow" class="eyebrow">漢字のれんしゅう</p><h1 id="main-heading">書いて、覚えて、組み立てよう。</h1><p id="phase" class="instruction"></p></header><p id="pause-help" class="hint" hidden>Escキーで一時停止</p>
+<section id="landing" class="practice">
+<h2>今日は何をする？</h2><div class="main-menu">
+<button id="menu-library" class="menu-card"><span aria-hidden="true">冊</span><strong>漢字図鑑</strong><small>練習した漢字を詳しく見る</small></button>
+<button id="menu-practice" class="menu-card"><span aria-hidden="true">字</span><strong>漢字練習</strong><small>学年と回を選んで遊ぶ</small></button>
+<button id="menu-settings" class="menu-card"><span aria-hidden="true">♫</span><strong>設定</strong><small>説明文・速度・BGM</small></button>
+</div><p id="landing-status" role="status"></p></section>
+<section id="settings-screen" class="practice" hidden>
+<button class="secondary to-main">← メニューへ戻る</button><h2>設定</h2>
+<div class="setting-row"><label for="display-language">説明文の表示</label><select id="display-language"><option value="kanji">漢字まじり</option><option value="kana">ひらがな</option></select><p class="hint">お題の答えや図鑑の漢字は、そのまま表示します。</p></div>
+<div class="setting-row"><label for="parts-speed">福笑いの速度</label><div class="range-row"><input id="parts-speed" type="range" min="0.4" max="1.6" step="0.1"><output id="speed-value" for="parts-speed"></output></div><p class="hint">0.4倍はゆっくり、1.0倍は標準、1.6倍は速めです。</p></div>
+<div class="setting-row"><label class="check-label"><input id="music-enabled" type="checkbox"> ゆるいBGMを流す</label><p class="hint">ボタンを押すと、やさしい音の曲が流れます。</p><p id="music-status" role="status"></p></div>
+<div class="setting-row"><label for="music-volume">BGMの音量</label><div class="range-row"><input id="music-volume" type="range" min="0" max="100" step="1"><output id="volume-value" for="music-volume"></output></div></div>
+<p id="settings-status" class="hint" role="status">設定はこのブラウザに保存されます。</p></section>
+<section id="library-screen" class="practice" hidden>
+<button class="secondary to-main">← メニューへ戻る</button>
+<div id="library-list-panel"><h2>漢字図鑑</h2><p>練習で書き終わった漢字を調べられるよ。</p><div class="library-toolbar"><label for="library-grade">学年</label><select id="library-grade"><option value="all">すべて</option><option value="1">1年生</option><option value="2">2年生</option><option value="3">3年生</option><option value="4">4年生</option><option value="5">5年生</option><option value="6">6年生</option></select><strong id="library-count"></strong></div><p id="library-empty" class="hint"></p><div id="library-grid" class="library-grid"></div></div>
+<article id="library-detail" hidden><button id="back-library-list" class="secondary">← 図鑑の一覧へ</button><div class="entry-heading"><h2 id="entry-character" data-literal></h2><p id="entry-meta"></p></div>
+<div class="entry-layout"><section class="stroke-panel"><h3>書き順</h3><svg id="stroke-diagram" viewBox="0 0 109 109" role="img" aria-label="漢字の書き順"></svg><p id="stroke-step" role="status"></p><div class="stroke-controls"><button id="stroke-prev" class="secondary">前の画</button><button id="stroke-next">次の画</button><button id="stroke-play" class="secondary">自動再生</button></div><p class="hint">緑の線が、今書いている画です。</p></section>
+<div class="entry-information"><section><h3>音読み</h3><p id="entry-on" class="dictionary-reading" data-literal></p><h3>訓読み</h3><p id="entry-kun" class="dictionary-reading" data-literal></p><p class="hint">訓読みの「・」の後ろは送り仮名です。辞書にある読みを載せています。</p></section><section><h3>どんな言葉で使う？</h3><p id="entry-usage" data-literal hidden></p><ul id="entry-examples" class="dictionary-vocabulary" data-literal></ul></section><section id="entry-origin-section" hidden><h3>成り立ち</h3><p id="entry-origin" data-literal></p><a id="entry-origin-source" target="_blank" rel="noopener">成り立ちの出典</a></section></div></div>
+<p class="hint">出典で確認した情報だけを載せています。説明を確認できていない項目は表示しません。</p><p class="hint">書き順：<a id="entry-stroke-source" target="_blank" rel="noopener">KanjiVG</a> ／ 読み・使う言葉：<a href="https://www.edrdg.org/edrdg/licence.html" target="_blank" rel="noopener">KANJIDIC・JMdict（EDRDG）</a></p></article></section>
+<section id="home" class="practice" hidden>
+<button class="secondary to-main">← メニューへ戻る</button>
+<h2>何年生の漢字であそぶ？</h2>
+<p>小学校で習う全1,026字。1回は10問まで、最後の回は残りの文字だけ。</p>
+<div id="grade-list" class="grade-list" aria-label="学年を選ぶ"></div>
+<p id="font-status" role="status"></p><p id="save-message" class="hint"></p>
+</section>
+<section id="lesson-menu" class="practice" hidden>
+<button id="back-grades" class="secondary">← 学年を選ぶ</button>
+<h2 id="lesson-heading"></h2><p>練習と福笑いを最後まで終えると、その回に「✓ 完了」が付くよ。</p>
+<div id="lesson-list" class="grade-list" aria-label="回を選ぶ"></div>
+</section>
+<section id="practice" class="practice" hidden>
+<div class="topline"><strong id="progress"></strong><span id="prompt"></span></div>
+<div class="writing-layout"><aside id="example"><p>お手本</p><canvas id="model" width="1000" height="1000" aria-label="漢字のお手本"></canvas></aside>
+<div class="writing-area"><div class="paper"><canvas id="writing" width="1000" height="1000" aria-label="左ボタンを押しながらマウスを動かして文字を書くマス"></canvas></div></div></div>
+<p id="tool-hint" class="hint" role="status"></p>
+<div class="tools" role="group" aria-label="書く道具"><button id="pen" aria-pressed="true">ペン</button><button id="eraser" aria-pressed="false">消しゴム</button></div>
+<div class="actions"><button id="clear" class="secondary">書き直す</button><button id="done" disabled>書けた</button></div>
+<div id="confirmation" class="notice" hidden><strong>丁寧に書けたかな？</strong><p>丁寧に書かないと、あとで部品が見分けにくくなるよ。自分で書いた文字が部品になって出てくるから、お手本の形を思い出して確かめよう。</p><button id="confirm">丁寧に書けた</button></div>
+<p id="feedback" role="status"></p>
+</section>
+<section id="parts" class="practice" hidden><div class="topline"><strong id="parts-progress"></strong></div><div class="parts-question"><p>今はこの漢字を作ってね</p><strong id="parts-prompt" aria-live="polite"></strong><p class="question-help">部品を選んで置こう。違う部品もそのまま置けるよ。全部置くと次のお題になるよ。</p></div><p>いろいろな部品が、上下左右・斜めからやってくるよ。<strong>緑の枠の中で部品をクリックすると、その位置に置かれるよ！</strong></p><div id="lane"><div id="target"><canvas id="target-assembly" width="1000" height="1000" aria-label="クリックした位置に置いた部品"></canvas></div></div><p id="parts-feedback" role="status">一度置いた部品は動かせないよ。</p><canvas id="assembled" width="1000" height="1000" aria-label="クリックした部品を組み立てた文字"></canvas></section>
+<section id="results" class="practice" hidden><p id="result-completion" class="completion complete" role="status"></p><h2 id="results-title"></h2><p>お手本との似かた · 1文字10点満点</p><p class="hint">線の位置と形を比べる簡易採点です。漢字の正誤や書き順を判定するものではありません。</p><p class="hint">位置ミスは、部品を元の位置から大きくずらして置いた数です。部品ミスは、お題と違う漢字の部品や同じ部品を重ねて使った数です。両方に当てはまる場合は、それぞれに数えます。はみ出した部分も、そのままの位置で確定します。</p><div id="score-list"></div><p id="total"></p><button id="back-lessons">回を選ぶ画面へ戻る</button><button id="back-home" class="secondary">スタート画面へ戻る</button></section>
+<footer class="hint"><a href="sources.html" target="_blank" rel="noopener">漢字・読み・フォントの出典</a></footer></main>
+<dialog id="pause-menu" aria-labelledby="pause-title" aria-describedby="pause-description">
+<h2 id="pause-title">一時停止中</h2>
+<p id="pause-description">止めたところから、続きを遊べるよ。</p>
+<div class="pause-actions"><button id="resume">再開</button><button id="restart" class="secondary">最初からやり直す</button><button id="pause-home" class="secondary">スタート画面へ戻る</button></div>
+<p class="hint">「最初からやり直す」は、この回の1問目に戻ります。</p>
+</dialog>
+</body></html>
